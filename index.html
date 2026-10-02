@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
   <meta name="referrer" content="no-referrer">
-  <link rel="preload" href="gift.bin?v=5609b38ef9bd" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="music.bin?v=5250b7d1a9c5" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="gift.bin?v=d0f2e5a6b56b" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="music.bin?v=8bea135b2e57" as="fetch" crossorigin="anonymous">
   <title>یک هدیه برای تو</title>
   <style>
-    :root{color-scheme:dark}*{box-sizing:border-box}html{background:#210d19}body{margin:0;min-height:100svh;display:grid;place-items:center;overflow:hidden;background:radial-gradient(ellipse at 70% 45%,#492035 0,transparent 55%),#210d19;color:#f6e8df;font-family:Tahoma,Arial,sans-serif}.loader{text-align:center;animation:appear .24s ease-out both}.mark{position:relative;font:italic 4.2rem Georgia,"Times New Roman",serif;letter-spacing:.12em;color:#e3a5b6;line-height:1}.mark span{position:absolute;right:-.2rem;bottom:-.2rem;font-size:1rem}.status{margin:1.15rem 0 0;color:#c2a6b3;font-size:.82rem;letter-spacing:.04em}.hint{margin:.65rem 0 0;color:#c2a6b3;font-size:.78rem;line-height:1.8}.error{color:#f0a6b8}.dot{display:inline-block;width:.28rem;height:.28rem;margin-right:.35rem;border-radius:50%;background:#e3a5b6;animation:pulse .85s ease-in-out infinite alternate}@keyframes pulse{to{opacity:.25;transform:scale(.65)}}@keyframes appear{from{opacity:0}to{opacity:1}}@media(prefers-reduced-motion:reduce){.loader,.dot{animation:none}}
+    :root{color-scheme:dark}*{box-sizing:border-box}html{background:#170a13}body{margin:0;min-height:100svh;display:grid;place-items:center;overflow:hidden;background:radial-gradient(circle at 72% 28%,#482033 0,transparent 42%),radial-gradient(circle at 18% 75%,#301424 0,transparent 38%),#170a13;color:#f8ece5;font-family:Tahoma,Arial,sans-serif}.loader{text-align:center;animation:appear .24s ease-out both}.mark{position:relative;font:italic 4.2rem Georgia,"Times New Roman",serif;letter-spacing:.12em;color:#e8afc0;line-height:1;text-shadow:0 0 48px #e8afc033}.mark span{position:absolute;right:-.2rem;bottom:-.2rem;font-size:1rem}.status{margin:1.15rem 0 0;color:#c5a8b4;font-size:.82rem;letter-spacing:.04em}.hint{margin:.65rem 0 0;color:#c5a8b4;font-size:.78rem;line-height:1.8}.error{color:#f0a6b8}.dot{display:inline-block;width:.28rem;height:.28rem;margin-right:.35rem;border-radius:50%;background:#e8afc0;animation:pulse .85s ease-in-out infinite alternate}@keyframes pulse{to{opacity:.25;transform:scale(.65)}}@keyframes appear{from{opacity:0}to{opacity:1}}@media(prefers-reduced-motion:reduce){.loader,.dot{animation:none}}
   </style>
 </head>
 <body>
@@ -61,7 +61,7 @@
         sessionStorage.setItem(storageName, encodedKey);
         try {
           const key = await crypto.subtle.importKey("raw", keyBytes, "AES-GCM", false, ["decrypt"]);
-          const response = await fetch("gift.bin?v=5609b38ef9bd");
+          const response = await fetch("gift.bin?v=d0f2e5a6b56b");
           if (!response.ok) throw new Error("payload");
           const payload = new Uint8Array(await response.arrayBuffer());
           if (payload.length < 30 || (payload[0] !== 1 && payload[0] !== 2)) {
