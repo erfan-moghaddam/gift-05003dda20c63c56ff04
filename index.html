@@ -2,10 +2,10 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
   <meta name="referrer" content="no-referrer">
-  <link rel="preload" href="gift.bin?v=f1874d3482b8" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="gift.bin?v=4a241e90f54b" as="fetch" crossorigin="anonymous">
   <link rel="preload" href="music.bin?v=919790610cd5" as="fetch" crossorigin="anonymous">
   <title>یک هدیه برای تو</title>
   <style>
@@ -61,7 +61,7 @@
         sessionStorage.setItem(storageName, encodedKey);
         try {
           const key = await crypto.subtle.importKey("raw", keyBytes, "AES-GCM", false, ["decrypt"]);
-          const response = await fetch("gift.bin?v=f1874d3482b8");
+          const response = await fetch("gift.bin?v=4a241e90f54b");
           if (!response.ok) throw new Error("payload");
           const payload = new Uint8Array(await response.arrayBuffer());
           if (payload.length < 30 || (payload[0] !== 1 && payload[0] !== 2)) {
