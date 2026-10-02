@@ -5,16 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
   <meta name="referrer" content="no-referrer">
+  <link rel="preload" href="gift.bin?v=80ec15c981f5" as="fetch" crossorigin="anonymous">
   <title>یک هدیه برای تو</title>
   <style>
-    :root{color-scheme:light}*{box-sizing:border-box}body{margin:0;min-height:100svh;display:grid;place-items:center;background:#f8eee8;color:#462030;font-family:Tahoma,Arial,sans-serif}.card{width:min(92vw,34rem);padding:2.2rem 1.6rem;text-align:center;background:#fffaf7;border:1px solid #ead3c6;border-radius:1.7rem;box-shadow:0 1.4rem 4rem #4620301a}.heart{font-size:2rem;color:#a4445b;animation:pulse 1.2s ease-in-out infinite}.status{margin:.9rem 0 0;line-height:2}.hint{margin:.7rem 0 0;color:#7c6670;font-size:.82rem;line-height:1.8}.error{color:#8f2940}@keyframes pulse{50%{transform:scale(1.16)}}@media(prefers-reduced-motion:reduce){.heart{animation:none}}
+    :root{color-scheme:dark}*{box-sizing:border-box}html{background:#210d19}body{margin:0;min-height:100svh;display:grid;place-items:center;overflow:hidden;background:radial-gradient(ellipse at 70% 45%,#492035 0,transparent 55%),#210d19;color:#f6e8df;font-family:Tahoma,Arial,sans-serif}.loader{text-align:center;animation:appear .24s ease-out both}.mark{position:relative;font:italic 4.2rem Georgia,"Times New Roman",serif;letter-spacing:.12em;color:#e3a5b6;line-height:1}.mark span{position:absolute;right:-.2rem;bottom:-.2rem;font-size:1rem}.status{margin:1.15rem 0 0;color:#c2a6b3;font-size:.82rem;letter-spacing:.04em}.hint{margin:.65rem 0 0;color:#c2a6b3;font-size:.78rem;line-height:1.8}.error{color:#f0a6b8}.dot{display:inline-block;width:.28rem;height:.28rem;margin-right:.35rem;border-radius:50%;background:#e3a5b6;animation:pulse .85s ease-in-out infinite alternate}@keyframes pulse{to{opacity:.25;transform:scale(.65)}}@keyframes appear{from{opacity:0}to{opacity:1}}@media(prefers-reduced-motion:reduce){.loader,.dot{animation:none}}
   </style>
 </head>
 <body>
-  <main class="card" aria-live="polite">
-    <div class="heart" aria-hidden="true">♥</div>
-    <p class="status" id="status">هدیه‌ات داره باز می‌شه…</p>
-    <p class="hint" id="hint">فقط یک لحظه صبر کن.</p>
+  <main class="loader" aria-live="polite">
+    <div class="mark" aria-hidden="true">H<span>♥</span></div>
+    <p class="status" id="status">برای تو<span class="dot" aria-hidden="true"></span></p>
+    <p class="hint" id="hint"></p>
   </main>
   <script>
     (() => {
@@ -58,17 +59,24 @@
         }
         sessionStorage.setItem(storageName, encodedKey);
         try {
-          const response = await fetch("gift.bin", { cache: "no-store" });
+          const response = await fetch("gift.bin?v=80ec15c981f5");
           if (!response.ok) throw new Error("payload");
           const payload = new Uint8Array(await response.arrayBuffer());
-          if (payload.length < 30 || payload[0] !== 1) {
-            throw new Error(`format:${payload.length}:${payload[0]}:${response.url}`);
+          if (payload.length < 30 || (payload[0] !== 1 && payload[0] !== 2)) {
+            throw new Error("format:" + payload.length + ":" + payload[0] + ":" + response.url);
           }
           const iv = payload.slice(1, 13);
           const ciphertext = payload.slice(13);
           const key = await crypto.subtle.importKey("raw", keyBytes, "AES-GCM", false, ["decrypt"]);
           const plain = await crypto.subtle.decrypt({ name: "AES-GCM", iv, tagLength: 128 }, key, ciphertext);
-          const html = new TextDecoder().decode(plain);
+          let html;
+          if (payload[0] === 2) {
+            if (!("DecompressionStream" in window)) throw new Error("browser-too-old");
+            const stream = new Blob([plain]).stream().pipeThrough(new DecompressionStream("gzip"));
+            html = await new Response(stream).text();
+          } else {
+            html = new TextDecoder().decode(plain);
+          }
           document.open();
           document.write(html);
           document.close();
